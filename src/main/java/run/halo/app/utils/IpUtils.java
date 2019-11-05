@@ -28,7 +28,6 @@ public class IpUtils {
             String strbody=restTemplate.exchange(uri, HttpMethod.GET, entity,String.class).getBody();
             String data = JSONObject.parseObject(strbody).getString("data");
             IPCount ipCount = JSON.parseObject(data,IPCount.class);
-            System.out.println(1123);
             return ipCount;
         }
 

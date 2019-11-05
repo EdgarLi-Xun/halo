@@ -30,8 +30,10 @@ public class IPCountServiceImpl implements IPCountService {
 
     @Override
     public void saveIPCount(String ip, String path) {
+        if (path.startsWith("/admin") || path.startsWith("/anatole") || path.endsWith("/png")){
+            return;
+        }
         List<IPCount> ipCountList = ipCountRepository.queryIPCountByIPAAndPathAndCreateTime(ip,path,new Date());
-        System.out.println(11);
         if (null == ipCountList || 0 == ipCountList.size()){
             IPCount ipCount = IpUtils.getIpInfo(ip);
             ipCount.setPath(path);
