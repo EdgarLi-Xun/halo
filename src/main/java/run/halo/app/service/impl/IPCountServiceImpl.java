@@ -1,7 +1,6 @@
 package run.halo.app.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 import run.halo.app.model.entity.IPCount;
 import run.halo.app.repository.IPCountRepository;
@@ -31,7 +30,6 @@ public class IPCountServiceImpl implements IPCountService {
 
     @Override
     public void saveIPCount(String ip, String path) {
-        IPCount searchIPC = new IPCount();
         List<IPCount> ipCountList = ipCountRepository.queryIPCountByIPAAndPathAndCreateTime(ip,path,new Date());
         System.out.println(11);
         if (null == ipCountList || 0 == ipCountList.size()){
