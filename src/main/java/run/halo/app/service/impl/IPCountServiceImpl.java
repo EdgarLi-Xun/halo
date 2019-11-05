@@ -30,12 +30,15 @@ public class IPCountServiceImpl implements IPCountService {
 
     @Override
     public void saveIPCount(String ip, String path) {
-        if (path.startsWith("/admin") || path.startsWith("/anatole") || path.endsWith("/png")){
+        if (path.startsWith("/admin") || path.startsWith("/anatole") || path.startsWith("/api/content") || path.endsWith("/png") || path.endsWith("/ico")){
             return;
         }
         List<IPCount> ipCountList = ipCountRepository.queryIPCountByIPAAndPathAndCreateTime(ip,path,new Date());
         if (null == ipCountList || 0 == ipCountList.size()){
             IPCount ipCount = IpUtils.getIpInfo(ip);
+            if (null == ipCount){
+                return;
+            }
             ipCount.setPath(path);
             ipCountRepository.save(ipCount);
         }
