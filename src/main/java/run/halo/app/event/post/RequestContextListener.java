@@ -36,6 +36,7 @@ public class RequestContextListener implements ServletRequestListener {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         //获取session
         HttpSession session = request.getSession();
+
         session.setAttribute("ip",ip);
         log.error("创建:"+ip);
         log.error("url:"+request.getRequestURI());
