@@ -37,7 +37,7 @@ public class IPCountServiceImpl  extends AbstractCrudService<IPCount, Integer> i
     @Override
     public void saveIPCount(String ip, String path) {
         if ((path.startsWith("/api/admin") || path.startsWith("/anatole") || path.startsWith("/api/content") || path.endsWith(".png") || path.endsWith(".ico")
-                || path.endsWith(".css") ||  path.endsWith(".js") || path.endsWith(".jpg") ||  path.endsWith(".JPG"))
+                || path.endsWith(".css") ||  path.endsWith(".js") || path.endsWith(".jpg") ||  path.endsWith(".JPG") || path.startsWith("/upload"))
 
                 && !path.startsWith("/archives")
         ){
