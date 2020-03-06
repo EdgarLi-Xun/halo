@@ -1,5 +1,6 @@
 package run.halo.app.service.impl;
 
+import cn.hutool.core.thread.ThreadUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -43,17 +44,20 @@ public class IPCountServiceImpl  extends AbstractCrudService<IPCount, Integer> i
         ){
             return;
         }
-        List<IPCount> ipCountList = ipCountRepository.queryIPCountByIPAAndPathAndCreateTime(ip,path,new Date());
-        if (null == ipCountList || 0 == ipCountList.size()){
-            IPCount ipCount = IpUtils.getIpInfo(ip);
-            if (null == ipCount){
-                return;
+        ThreadUtil.execAsync(new Runnable() {
+            @Override
+            public void run() {
+                List<IPCount> ipCountList = ipCountRepository.queryIPCountByIPAAndPathAndCreateTime(ip,path,new Date());
+                if (null == ipCountList || 0 == ipCountList.size()){
+                    IPCount ipCount = IpUtils.getIpInfo(ip);
+                    if (null == ipCount){
+                        return;
+                    }
+                    ipCount.setPath(path);
+                    ipCountRepository.save(ipCount);
+                }
             }
-            ipCount.setPath(path);
-            ipCountRepository.save(ipCount);
-        }
-
-
+        });
     }
 
     @Override
